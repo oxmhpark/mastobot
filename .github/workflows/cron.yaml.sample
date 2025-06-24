@@ -1,0 +1,33 @@
+name: Run mastobot hourly
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # 매 정시마다 UTC 기준
+  workflow_dispatch:      # 수동 실행도 가능
+
+permissions:
+  contents: read
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install mastodon.py requests
+
+      - name: Run mastobot
+        env:
+          GITHUB_REPO_OWNER: ${{ secrets.GITHUB_REPO_OWNER }}
+          GITHUB_REPO_NAME: ${{ secrets.GITHUB_REPO_NAME }}
+          GITHUB_REPO_ROOT: ${{ secrets.GITHUB_REPO_ROOT }}
+          MASTODON_BASE_URL: ${{ secrets.MASTODON_BASE_URL }}
+          MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+        run: python mastobot.py
