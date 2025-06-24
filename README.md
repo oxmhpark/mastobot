@@ -16,7 +16,7 @@
 
 ### 1. 스크립트 사용자화 및 저장
 
-`./resources/pull_mastobot_and_run.sh`
+👉 [pull_mastobot_and_run.sh](./resources/pull_mastobot_and_run.sh)
 
 ### 2. 스크립트 실행권한 부여
 
